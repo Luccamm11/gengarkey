@@ -17,11 +17,18 @@
     </div>
     <script>
         const today = new Date();
-        const day = today.getUTCDate();
-        const month = today.getUTCMonth() + 1;
-        const year = today.getUTCFullYear();
-        // Esta fórmula DEVE ser idêntica à do script Lua
-        const dailyKey = "Gengar-" + day + "-" + month + "-" + (year - 2020);
+        const d = today.getUTCDate();
+        const m = today.getUTCMonth() + 1;
+        const y = today.getUTCFullYear();
+
+        // Algoritmo de geração de chave. DEVE ser idêntico ao do script Lua.
+        let seed = (y * 10000) + (m * 100) + d;
+        let result = (seed * 37 + (d * 97)) % 999983;
+        result = (result * (m + 13)) % 999983;
+
+        // Formata o resultado como uma string hexadecimal de 6 dígitos
+        const dailyKey = "Gengar-" + result.toString(16).toUpperCase().padStart(6, '0');
+        
         document.getElementById("key").textContent = dailyKey;
     </script>
 </body>
